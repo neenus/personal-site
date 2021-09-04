@@ -7,7 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 
 const theme = createTheme({
   typography: {
-    fontFamily: "'Roboto', sans-serif"
+    fontFamily: ["Montserrat", "sans-serif"].join(",")
   }
 });
 
