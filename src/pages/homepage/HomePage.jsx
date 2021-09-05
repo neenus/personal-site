@@ -1,3 +1,4 @@
+import { createRef, useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
 import {
   createTheme,
@@ -5,13 +6,9 @@ import {
   ThemeProvider
 } from "@material-ui/core/styles";
 import DoubleArrowOutlinedIcon from "@material-ui/icons/DoubleArrowOutlined";
-const {
-  CardMedia,
-  makeStyles,
-  Typography,
-  Box,
-  Fab
-} = require("@material-ui/core");
+import About from "../../components/About.component";
+import Title from "../../components/Title.component";
+const { CardMedia, makeStyles, Box, Fab } = require("@material-ui/core");
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
@@ -26,27 +23,54 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     height: "100vh"
   },
-  primaryMessage: {
-    textTransform: "uppercase",
-    fontWeight: 700
-  },
   secondaryMessage: {
     textTransform: "uppercase",
     fontWeight: 200
   },
-  downButton: {
+  btn: {
     position: "absolute",
     bottom: "25%",
     left: "50%",
-    transform: "translate(-50%, 50%)",
+    transform: "translate(-50%, 50%)"
+  },
+  down: {
     "&>:nth-child(1)": {
       transform: "rotate(90deg)"
+    }
+  },
+  up: {
+    "&>:nth-child(1)": {
+      transform: "rotate(-90deg)"
     }
   }
 }));
 
 const HomePage = () => {
   const classes = useStyles();
+  const aboutRef = createRef();
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  const handlePagePosition = () => {
+    if (scrollPosition < 150) {
+      aboutRef.current.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const props = useSpring({
     to: { opacity: 1 },
@@ -72,31 +96,26 @@ const HomePage = () => {
               alignItems="center"
               color="white"
             >
-              <Typography
-                variant="h2"
-                className={classes.primaryMessage}
-                gutterBottom
-                align="center"
-              >
-                Neenus Gabriel
-              </Typography>
-              <Typography
+              <Title variant="h2" message="Neenus Gabriel" className="title" />
+              <Title
                 variant="h4"
-                className={classes.secondaryMessage}
-                align="center"
-              >
-                Full stack web developer
-              </Typography>
+                message="Full stack web developer"
+                className="subtitle"
+              />
             </Box>
             <Fab
               aria-label="down"
               variant="circular"
-              className={classes.downButton}
+              className={`${classes.btn} ${
+                scrollPosition > 150 ? classes.up : classes.down
+              }`}
+              onClick={handlePagePosition}
             >
               <DoubleArrowOutlinedIcon />
             </Fab>
           </div>
         </CardMedia>
+        <About ref={aboutRef} />
       </ThemeProvider>
     </animated.main>
   );
