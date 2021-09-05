@@ -4,7 +4,14 @@ import {
   responsiveFontSizes,
   ThemeProvider
 } from "@material-ui/core/styles";
-const { CardMedia, makeStyles, Typography, Box } = require("@material-ui/core");
+import DoubleArrowOutlinedIcon from "@material-ui/icons/DoubleArrowOutlined";
+const {
+  CardMedia,
+  makeStyles,
+  Typography,
+  Box,
+  Fab
+} = require("@material-ui/core");
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
@@ -27,7 +34,15 @@ const useStyles = makeStyles(theme => ({
     textTransform: "uppercase",
     fontWeight: 200
   },
-  [theme.breakpoints.up("md")]: {}
+  downButton: {
+    position: "absolute",
+    bottom: "25%",
+    left: "50%",
+    transform: "translate(-50%, 50%)",
+    "&>:nth-child(1)": {
+      transform: "rotate(90deg)"
+    }
+  }
 }));
 
 const HomePage = () => {
@@ -73,6 +88,13 @@ const HomePage = () => {
                 Full stack web developer
               </Typography>
             </Box>
+            <Fab
+              aria-label="down"
+              variant="circular"
+              className={classes.downButton}
+            >
+              <DoubleArrowOutlinedIcon />
+            </Fab>
           </div>
         </CardMedia>
       </ThemeProvider>
