@@ -1,3 +1,4 @@
+import { useSpring, animated } from "react-spring";
 import {
   createTheme,
   responsiveFontSizes,
@@ -31,8 +32,17 @@ const useStyles = makeStyles(theme => ({
 
 const HomePage = () => {
   const classes = useStyles();
+
+  const props = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+    delay: 300,
+    config: {
+      duration: 700
+    }
+  });
   return (
-    <main>
+    <animated.main style={props}>
       <ThemeProvider theme={theme}>
         <CardMedia
           className={classes.media}
@@ -48,13 +58,6 @@ const HomePage = () => {
               color="white"
             >
               <Typography
-                variant="h4"
-                className={classes.secondaryMessage}
-                align="center"
-              >
-                Hello! my name is
-              </Typography>
-              <Typography
                 variant="h2"
                 className={classes.primaryMessage}
                 gutterBottom
@@ -62,11 +65,18 @@ const HomePage = () => {
               >
                 Neenus Gabriel
               </Typography>
+              <Typography
+                variant="h4"
+                className={classes.secondaryMessage}
+                align="center"
+              >
+                Full stack web developer
+              </Typography>
             </Box>
           </div>
         </CardMedia>
       </ThemeProvider>
-    </main>
+    </animated.main>
   );
 };
 
