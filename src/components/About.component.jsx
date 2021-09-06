@@ -4,10 +4,20 @@ import {
   Box,
   Typography,
   Button,
-  Link
+  Link,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  DialogActions,
+  IconButton,
+  useMediaQuery,
+  useTheme
 } from "@material-ui/core";
-import { forwardRef } from "react";
+import CloseIcon from "@material-ui/icons/Close";
+import { forwardRef, useState } from "react";
 import Title from "./Title.component";
+import ContactForm from "./ContactForm.component";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,6 +50,18 @@ const useStyles = makeStyles(theme => ({
 
 const About = forwardRef((props, ref) => {
   const classes = useStyles();
+  const [dialog, setDialog] = useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const handleClick = () => {
+    setDialog(true);
+  };
+
+  const handleClose = () => {
+    setDialog(false);
+  };
+
   return (
     <div id="about" className={classes.root} ref={ref}>
       <Box
@@ -49,7 +71,7 @@ const About = forwardRef((props, ref) => {
         justifyContent="center"
         alignItems="center"
       >
-        <Title variant="h2" message="About me" className="subtitle" />
+        <Title variant="h4" message="About me" className="subtitle" />
         <Typography>
           Dynamic and motivated software engineer with years of experience in
           full stack software development and a passion for creative problem
@@ -57,12 +79,12 @@ const About = forwardRef((props, ref) => {
           things.
           <br />
           <br />
-          Outside of work I'm a husband, a father, a son and a friend. I try to
-          enjoy my time with my family as much as I can because life is too
-          short not to... if you want to know more about me buy me a beer and
-          I'll tell you everything... just kidding you can{" "}
-          <Link href="#">get in touch here</Link> but a beer would still be
-          nice. 😜
+          Outside of work I'm a husband, a father, a son a brother and a friend.
+          I try to enjoy my time with my family as much as I can because life is
+          too short not to... if you want to know more about me buy me a beer
+          and I'll tell you everything... just kidding you can{" "}
+          <Link onClick={handleClick}>get in touch here</Link> but a beer would
+          still be nice. 😜
         </Typography>
         <Avatar
           variant="circular"
@@ -75,10 +97,36 @@ const About = forwardRef((props, ref) => {
             )
           }
         />
-        <Button variant="outlined" className={classes.btn}>
+        <Button
+          onClick={handleClick}
+          variant="outlined"
+          className={classes.btn}
+        >
           Contact Me!
         </Button>
       </Box>
+      <Dialog
+        open={dialog}
+        onClose={handleClose}
+        fullScreen={fullScreen}
+        fullWidth
+      >
+        <DialogActions>
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={handleClose}
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogActions>
+        <DialogTitle>Let's Talk</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Drop me a line</DialogContentText>
+          <ContactForm />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 });
