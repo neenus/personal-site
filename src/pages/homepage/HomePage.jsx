@@ -1,17 +1,11 @@
 import { createRef, useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
-import {
-  createTheme,
-  responsiveFontSizes,
-  ThemeProvider
-} from "@material-ui/core/styles";
+
 import DoubleArrowOutlinedIcon from "@material-ui/icons/DoubleArrowOutlined";
 import About from "../../components/About.component";
 import Title from "../../components/Title.component";
 const { CardMedia, makeStyles, Box, Fab } = require("@material-ui/core");
 
-let theme = createTheme();
-theme = responsiveFontSizes(theme);
 const useStyles = makeStyles(theme => ({
   media: {
     height: "100vh",
@@ -84,41 +78,39 @@ const HomePage = () => {
   });
   return (
     <animated.main style={props}>
-      <ThemeProvider theme={theme}>
-        <CardMedia
-          className={classes.media}
-          image="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80"
-        >
-          <div className={classes.overlay}>
-            <Box
-              minHeight="70vh"
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-              color="white"
-            >
-              <Title variant="h2" message="Neenus Gabriel" className="title" />
-              <Title
-                variant="h4"
-                message="Full stack web developer"
-                className="subtitle"
-              />
-            </Box>
-            <Fab
-              aria-label="down"
-              variant="circular"
-              className={`${classes.btn} ${
-                scrollPosition > 150 ? classes.up : classes.down
-              }`}
-              onClick={handlePagePosition}
-            >
-              <DoubleArrowOutlinedIcon />
-            </Fab>
-          </div>
-        </CardMedia>
-        <About ref={aboutRef} />
-      </ThemeProvider>
+      <CardMedia
+        className={classes.media}
+        image="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80"
+      >
+        <div className={classes.overlay}>
+          <Box
+            minHeight="70vh"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            color="white"
+          >
+            <Title variant="h2" message="Neenus Gabriel" className="title" />
+            <Title
+              variant="h4"
+              message="Full stack web developer"
+              className="subtitle"
+            />
+          </Box>
+          <Fab
+            aria-label="down"
+            variant="circular"
+            className={`${classes.btn} ${
+              scrollPosition > 150 ? classes.up : classes.down
+            }`}
+            onClick={handlePagePosition}
+          >
+            <DoubleArrowOutlinedIcon />
+          </Fab>
+        </div>
+      </CardMedia>
+      <About ref={aboutRef} />
     </animated.main>
   );
 };
