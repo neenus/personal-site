@@ -35,11 +35,13 @@ const useStyles = makeStyles(theme => ({
   },
   down: {
     "&>:nth-child(1)": {
+      transition: "transform 0.75s ease-in-out",
       transform: "rotate(90deg)"
     }
   },
   up: {
     "&>:nth-child(1)": {
+      transition: "transform 0.75s ease-in-out",
       transform: "rotate(-90deg)"
     }
   }
