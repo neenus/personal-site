@@ -4,6 +4,7 @@ import { useSpring, animated } from "react-spring";
 import DoubleArrowOutlinedIcon from "@material-ui/icons/DoubleArrowOutlined";
 import About from "../../components/About.component";
 import Title from "../../components/Title.component";
+import Footer from "../../components/Footer.component";
 const { CardMedia, makeStyles, Box, Fab } = require("@material-ui/core");
 
 const useStyles = makeStyles(theme => ({
@@ -19,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
   btn: {
     position: "absolute",
-    bottom: "25%",
+    bottom: "15%",
     left: "50%",
     transform: "translate(-50%, 50%)"
   },
@@ -107,6 +108,7 @@ const HomePage = () => {
         </div>
       </CardMedia>
       <About ref={aboutRef} />
+      <Footer />
     </animated.main>
   );
 };
