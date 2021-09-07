@@ -4,11 +4,13 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles(theme => ({
   title: {
     textTransform: "uppercase",
-    fontWeight: 700
+    fontWeight: 700,
+    fontFamily: "Montserrat"
   },
   subtitle: {
     textTransform: "uppercase",
-    fontWeight: 200
+    fontWeight: 200,
+    fontFamily: "Montserrat"
   }
 }));
 

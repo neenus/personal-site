@@ -1,15 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createTheme, ThemeProvider } from "@material-ui/core";
+import {
+  createTheme,
+  ThemeProvider,
+  responsiveFontSizes
+} from "@material-ui/core";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-const theme = createTheme({
+let theme = createTheme({
   typography: {
-    fontFamily: ["Montserrat", "sans-serif"].join(",")
+    fontFamily: "'Fira Sans Extra Condensed', sans-serif",
+    fontSize: 16,
+    fontWeightLight: 100,
+    fontWeightMedium: 400,
+    fontWeightBold: 700
   }
 });
+theme = responsiveFontSizes(theme);
 
 ReactDOM.render(
   <React.StrictMode>

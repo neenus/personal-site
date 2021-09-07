@@ -7,7 +7,6 @@ import {
   Link,
   Dialog,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   DialogActions,
   IconButton,
@@ -45,6 +44,10 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: "#000",
       color: "#fff"
     }
+  },
+  dialogTitle: {
+    display: "flex",
+    justifyContent: "center"
   }
 }));
 
@@ -73,18 +76,18 @@ const About = forwardRef((props, ref) => {
       >
         <Title variant="h4" message="About me" className="subtitle" />
         <Typography>
-          Dynamic and motivated software engineer with years of experience in
-          full stack software development and a passion for creative problem
-          solving. Dedicated life-long learner always eager to discover new
-          things.
+          Dynamic and motivated Software Developer with years of experience in
+          full stack web development and a passion for creative problem solving.
+          Dedicated life-long learner always eager to discover new things.
           <br />
           <br />
-          Outside of work I'm a husband, a father, a son a brother and a friend.
-          I try to enjoy my time with my family as much as I can because life is
-          too short not to... if you want to know more about me buy me a beer
-          and I'll tell you everything... just kidding you can{" "}
-          <Link onClick={handleClick}>get in touch here</Link> but a beer would
-          still be nice. 😜
+          Outside of work I try to enjoy my time with my beautiful family as
+          much as I can because life is too short not to... if you want to know
+          more about me buy me a beer and I'll tell you everything... just
+          kidding you can <Link onClick={handleClick}>
+            get in touch here
+          </Link>{" "}
+          but a beer would still be nice. 😜
         </Typography>
         <Avatar
           variant="circular"
@@ -121,9 +124,10 @@ const About = forwardRef((props, ref) => {
             <CloseIcon />
           </IconButton>
         </DialogActions>
-        <DialogTitle>Let's Talk</DialogTitle>
+        <DialogTitle className={classes.dialogTitle}>
+          Let's get in touch
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText>Drop me a line</DialogContentText>
           <ContactForm />
         </DialogContent>
       </Dialog>

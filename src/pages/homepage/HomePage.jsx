@@ -17,10 +17,6 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     height: "100vh"
   },
-  secondaryMessage: {
-    textTransform: "uppercase",
-    fontWeight: 200
-  },
   btn: {
     position: "absolute",
     bottom: "25%",
@@ -94,7 +90,7 @@ const HomePage = () => {
             <Title variant="h2" message="Neenus Gabriel" className="title" />
             <Title
               variant="h4"
-              message="Full stack web developer"
+              message="software developer"
               className="subtitle"
             />
           </Box>
