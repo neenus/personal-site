@@ -1,5 +1,6 @@
 import { Box, makeStyles, Button } from "@material-ui/core";
 import { Send } from "@material-ui/icons";
+import axios from "axios";
 import { useState, useEffect } from "react";
 import FormInput from "./FormInput.component";
 
@@ -56,9 +57,31 @@ const ContactForm = () => {
   };
 
   const handleSubmit = async e => {
+    const endpoint =
+      "https://gd1c2sp8qg.execute-api.ca-central-1.amazonaws.com/dev/send";
+    const { name, email, message } = state;
     if (!state.formDsiabled) {
       e.preventDefault();
-      console.log(state);
+
+      try {
+        const response = await axios({
+          method: "POST",
+          url: endpoint,
+          withCredentials: false,
+          data: {
+            name,
+            email,
+            message
+          },
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+
       resetState();
     }
   };
