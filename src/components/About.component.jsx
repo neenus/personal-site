@@ -8,7 +8,6 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  DialogActions,
   IconButton,
   useMediaQuery,
   useTheme
@@ -48,6 +47,11 @@ const useStyles = makeStyles(theme => ({
   dialogTitle: {
     display: "flex",
     justifyContent: "center"
+  },
+  closeButton: {
+    position: "absolute",
+    top: 15,
+    right: 15
   }
 }));
 
@@ -114,16 +118,15 @@ const About = forwardRef((props, ref) => {
         fullScreen={fullScreen}
         fullWidth
       >
-        <DialogActions>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={handleClose}
-            aria-label="close"
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogActions>
+        <IconButton
+          size="small"
+          color="inherit"
+          onClick={handleClose}
+          aria-label="close"
+          className={classes.closeButton}
+        >
+          <CloseIcon />
+        </IconButton>
         <DialogTitle className={classes.dialogTitle}>
           Let's get in touch
         </DialogTitle>
