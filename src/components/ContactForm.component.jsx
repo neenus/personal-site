@@ -1,8 +1,9 @@
 import { Box, makeStyles, Button } from "@material-ui/core";
 import { Send } from "@material-ui/icons";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import FormInput from "./FormInput.component";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,6 +17,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ContactForm = () => {
+  const recaptchaRef = useRef();
   const classes = useStyles();
   const [state, setState] = useState({
     name: "",
@@ -57,12 +59,14 @@ const ContactForm = () => {
   };
 
   const handleSubmit = async e => {
+    e.preventDefault();
+    const token = await recaptchaRef.current.executeAsync();
+    recaptchaRef.current.reset(); // reset recaptcha after every
+
     const endpoint =
       "https://gd1c2sp8qg.execute-api.ca-central-1.amazonaws.com/dev/send";
     const { name, email, message } = state;
     if (!state.formDsiabled) {
-      e.preventDefault();
-
       try {
         const response = await axios({
           method: "POST",
@@ -71,7 +75,8 @@ const ContactForm = () => {
           data: {
             name,
             email,
-            message
+            message,
+            token
           },
           headers: {
             "Content-Type": "application/json"
@@ -229,6 +234,11 @@ const ContactForm = () => {
           </Button>
         </form>
       </Box>
+      <ReCAPTCHA
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey={process.env.REACT_APP_SITE_KEY}
+      ></ReCAPTCHA>
     </div>
   );
 };
