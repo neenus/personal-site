@@ -1,21 +1,6 @@
-import {
-  makeStyles,
-  Avatar,
-  Box,
-  Typography,
-  Button,
-  Link,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  useMediaQuery,
-  useTheme
-} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import { forwardRef, useState } from "react";
+import { makeStyles, Avatar, Box, Typography, Button } from "@material-ui/core";
+import { forwardRef } from "react";
 import Title from "./Title.component";
-import ContactForm from "./ContactForm.component";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,16 +42,9 @@ const useStyles = makeStyles(theme => ({
 
 const About = forwardRef((props, ref) => {
   const classes = useStyles();
-  const [dialog, setDialog] = useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleClick = () => {
-    setDialog(true);
-  };
-
-  const handleClose = () => {
-    setDialog(false);
+    // setDialog(true);
   };
 
   return (
@@ -88,10 +66,8 @@ const About = forwardRef((props, ref) => {
           Outside of work I try to enjoy my time with my beautiful family as
           much as I can because life is too short not to... if you want to know
           more about me buy me a beer and I'll tell you everything... just
-          kidding you can <Link onClick={handleClick}>
-            get in touch here
-          </Link>{" "}
-          but a beer would still be nice. 😜
+          kidding you can get in touch here by filling the form below but a beer
+          would still be nice. 😜
         </Typography>
         <Avatar
           variant="circular"
@@ -112,28 +88,6 @@ const About = forwardRef((props, ref) => {
           Contact Me!
         </Button>
       </Box>
-      <Dialog
-        open={dialog}
-        onClose={handleClose}
-        fullScreen={fullScreen}
-        fullWidth
-      >
-        <IconButton
-          size="small"
-          color="inherit"
-          onClick={handleClose}
-          aria-label="close"
-          className={classes.closeButton}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogTitle className={classes.dialogTitle}>
-          Let's get in touch
-        </DialogTitle>
-        <DialogContent>
-          <ContactForm />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 });

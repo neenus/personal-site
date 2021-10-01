@@ -5,6 +5,7 @@ import DoubleArrowOutlinedIcon from "@material-ui/icons/DoubleArrowOutlined";
 import About from "../../components/About.component";
 import Title from "../../components/Title.component";
 import Footer from "../../components/Footer.component";
+import Contact from "../../components/ContactSection";
 const { CardMedia, makeStyles, Box, Fab } = require("@material-ui/core");
 
 const useStyles = makeStyles(theme => ({
@@ -108,6 +109,7 @@ const HomePage = () => {
         </div>
       </CardMedia>
       <About ref={aboutRef} />
+      <Contact />
       <Footer />
     </animated.main>
   );

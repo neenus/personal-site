@@ -1,4 +1,10 @@
-import { Box, makeStyles, Button } from "@material-ui/core";
+import {
+  Box,
+  makeStyles,
+  Button,
+  useTheme,
+  useMediaQuery
+} from "@material-ui/core";
 import { Send } from "@material-ui/icons";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
@@ -19,6 +25,8 @@ const useStyles = makeStyles(theme => ({
 const ContactForm = () => {
   const recaptchaRef = useRef();
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [state, setState] = useState({
     name: "",
     email: "",
@@ -215,7 +223,7 @@ const ContactForm = () => {
             label="Message"
             name="message"
             multiline
-            minRows="6"
+            minRows="3"
             handleChange={handleChange}
             value={state.message}
             error={state.validationErrors.message}
@@ -227,8 +235,7 @@ const ContactForm = () => {
             color="primary"
             className={classes.submit}
             endIcon={<Send />}
-            fullWidth
-            disabled={state.formDsiabled}
+            fullWidth={isMobile}
           >
             Send
           </Button>

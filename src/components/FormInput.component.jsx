@@ -9,6 +9,7 @@ const FormInput = ({ handleChange, ...otherProps }) => {
         required
         fullWidth
         autoComplete="off"
+        size="small"
         {...otherProps}
         onChange={handleChange}
       />

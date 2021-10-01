@@ -10,7 +10,19 @@ const useStyles = makeStyles(theme => ({
   subtitle: {
     textTransform: "uppercase",
     fontWeight: 200,
-    fontFamily: "Montserrat"
+    fontFamily: "Montserrat",
+    position: "relative",
+    marginBottom: "2em",
+
+    "&:after": {
+      display: "block",
+      content: '""',
+      width: "100%",
+      height: "1px",
+      background: "red",
+      position: "absolute",
+      bottom: -10
+    }
   }
 }));
 
