@@ -50,7 +50,7 @@ const HomePage = () => {
 
   const handlePagePosition = () => {
     if (scrollPosition < 150) {
-      aboutRef.current.scrollIntoView({ behavior: "smooth" });
+      aboutRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
     } else {
       window.scrollTo({
         top: 0,

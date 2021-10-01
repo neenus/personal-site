@@ -44,7 +44,12 @@ const About = forwardRef((props, ref) => {
   const classes = useStyles();
 
   const handleClick = () => {
-    // setDialog(true);
+    // scroll all the way to the bottom of the page
+    window.scrollTo({
+      left: 0,
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
   };
 
   return (
