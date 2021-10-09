@@ -8,7 +8,7 @@ import {
 import useForm from "../useForm";
 import { validate } from "../utils/validate";
 import { Send } from "@material-ui/icons";
-// import axios from "axios";
+import axios from "axios";
 import { useRef, useEffect, useState } from "react";
 import FormInput from "./FormInput.component";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -36,7 +36,35 @@ const ContactForm = () => {
     validate
   );
 
-  function submit() {
+  async function submit() {
+    const token = await recaptchaRef.current.executeAsync();
+    recaptchaRef.current.reset();
+
+    const endpoint =
+      "https://gd1c2sp8qg.execute-api.ca-central-1.amazonaws.com/dev/send";
+    const { name, email, message } = state;
+    if (formReady) {
+      try {
+        const response = await axios({
+          method: "POST",
+          url: endpoint,
+          withCredentials: false,
+          data: {
+            name,
+            email,
+            message,
+            token
+          },
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     formReady
       ? console.log("form submitted!", state)
       : console.log("Cannot submit form please fix form errors");
