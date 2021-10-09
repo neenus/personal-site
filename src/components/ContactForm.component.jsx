@@ -3,15 +3,19 @@ import {
   makeStyles,
   Button,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  Snackbar,
+  IconButton
 } from "@material-ui/core";
 import useForm from "../useForm";
 import { validate } from "../utils/validate";
 import { Send } from "@material-ui/icons";
 import axios from "axios";
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import FormInput from "./FormInput.component";
 import ReCAPTCHA from "react-google-recaptcha";
+import CloseIcon from "@material-ui/icons/Close";
+import MuiAlert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,6 +25,9 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     margin: theme.spacing(0, "auto"),
     maxWidth: theme.spacing(125)
+  },
+  snackbar: {
+    fontSize: "2rem"
   }
 }));
 
@@ -30,6 +37,22 @@ const ContactForm = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [formReady, setFormReady] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    success: false
+  });
+
+  const handleClose = () =>
+    setSnackbar({
+      ...snackbar,
+      message: "",
+      open: false
+    });
+
+  const Alert = props => {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  };
 
   const { state, handleBlur, handleChange, handleSubmit, errors } = useForm(
     submit,
@@ -60,14 +83,31 @@ const ContactForm = () => {
           }
         });
         console.log(response);
+        if (response.status === 200) {
+          setSnackbar({
+            ...snackbar,
+            success: true,
+            message:
+              "Thank you! Your email was sent successfully I will get back to you shortly.",
+            open: true
+          });
+        } else {
+          setSnackbar({
+            ...snackbar,
+            success: false,
+            message: "Opps! something went wrong, please try again.",
+            open: true
+          });
+        }
       } catch (error) {
-        console.log(error);
+        setSnackbar({
+          ...snackbar,
+          success: false,
+          message: "Opps! something went wrong, please try again.",
+          open: true
+        });
       }
     }
-
-    formReady
-      ? console.log("form submitted!", state)
-      : console.log("Cannot submit form please fix form errors");
   }
 
   useEffect(() => {
@@ -82,6 +122,28 @@ const ContactForm = () => {
 
   return (
     <div id="contact-form" className={classes.root}>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        fontSize="large"
+        open={snackbar.open}
+        autoHideDuration={8000}
+        onClose={handleClose}
+        message={snackbar.message}
+        action={
+          <React.Fragment>
+            <IconButton color="secondary" size="small" onClick={handleClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      >
+        <Alert
+          onClose={handleClose}
+          severity={snackbar.success ? "success" : "error"}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
       <Box className={classes.container}>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <FormInput
