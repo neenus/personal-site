@@ -6,9 +6,10 @@ import {
   useMediaQuery
 } from "@material-ui/core";
 import useForm from "../useForm";
+import { validate } from "../utils/validate";
 import { Send } from "@material-ui/icons";
 // import axios from "axios";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import FormInput from "./FormInput.component";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -28,12 +29,28 @@ const ContactForm = () => {
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [formReady, setFormReady] = useState(false);
 
-  const { state, handleChange, handleSubmit } = useForm(submit);
+  const { state, handleBlur, handleChange, handleSubmit, errors } = useForm(
+    submit,
+    validate
+  );
 
   function submit() {
-    console.log("form submitted!", state);
+    formReady
+      ? console.log("form submitted!", state)
+      : console.log("Cannot submit form please fix form errors");
   }
+
+  useEffect(() => {
+    if (Object.values(state).every(x => x !== "")) {
+      if (Object.values(errors).every(x => x === "")) {
+        setFormReady(true);
+      }
+    } else {
+      setFormReady(false);
+    }
+  }, [errors, state]);
 
   return (
     <div id="contact-form" className={classes.root}>
@@ -42,23 +59,32 @@ const ContactForm = () => {
           <FormInput
             label="Full Name"
             name="name"
+            onBlur={e => handleBlur(e.target)}
             handleChange={handleChange}
             value={state.name}
+            error={errors.name ? true : false}
+            helperText={errors.name ? errors.name : ""}
           />
           <FormInput
             label="Email Address"
             name="email"
             type="email"
+            onBlur={e => handleBlur(e.target)}
             handleChange={handleChange}
             value={state.email}
+            error={errors.email ? true : false}
+            helperText={errors.email ? errors.email : ""}
           />
           <FormInput
             label="Message"
             name="message"
             multiline
             minRows="3"
+            onBlur={e => handleBlur(e.target)}
             handleChange={handleChange}
             value={state.message}
+            error={errors.message ? true : false}
+            helperText={errors.message ? errors.message : ""}
           />
           <Button
             type="submit"
@@ -67,6 +93,7 @@ const ContactForm = () => {
             className={classes.submit}
             endIcon={<Send />}
             fullWidth={isMobile}
+            disabled={!formReady}
           >
             Send
           </Button>
