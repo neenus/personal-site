@@ -63,8 +63,7 @@ const ContactForm = () => {
     const token = await recaptchaRef.current.executeAsync();
     recaptchaRef.current.reset();
 
-    const endpoint =
-      "https://gd1c2sp8qg.execute-api.ca-central-1.amazonaws.com/dev/send";
+    const endpoint = process.env.REACT_APP_AWS_API_GATEWAT_URL;
     const { name, email, message } = state;
     if (formReady) {
       try {
@@ -82,7 +81,6 @@ const ContactForm = () => {
             "Content-Type": "application/json"
           }
         });
-        console.log(response);
         if (response.status === 200) {
           setSnackbar({
             ...snackbar,
