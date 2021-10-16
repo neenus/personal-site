@@ -1,4 +1,4 @@
-export const validate = payload => {
+export const validateOne = payload => {
   const { name, value } = payload;
 
   switch (name) {
@@ -17,9 +17,19 @@ export const validate = payload => {
   return errors;
 };
 
+export const validateAll = (state, errors) => {
+  if (Object.values(state).every(x => x !== "")) {
+    if (Object.values(errors).every(x => x === "")) {
+      return true;
+    }
+  } else {
+    return false;
+  }
+};
+
 let errors = {};
 const nameIsValid = name => {
-  if (!name) {
+  if (!name || name === "Name is required") {
     return (errors = {
       ...errors,
       name: "Name is required"
@@ -33,7 +43,7 @@ const nameIsValid = name => {
 };
 
 const messageIsValid = message => {
-  if (!message) {
+  if (!message || message === "Message is required") {
     return (errors = {
       ...errors,
       message: "Message is required"
@@ -44,7 +54,7 @@ const messageIsValid = message => {
 };
 
 const emailIsValid = email => {
-  if (!email) {
+  if (!email || email === "Email is required") {
     return (errors = {
       ...errors,
       email: "Email is required"

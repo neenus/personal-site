@@ -5,10 +5,10 @@ import {
   useTheme,
   useMediaQuery,
   Snackbar,
-  IconButton
+  IconButton,
+  CircularProgress
 } from "@material-ui/core";
 import useForm from "../useForm";
-import { validate } from "../utils/validate";
 import { Send } from "@material-ui/icons";
 import axios from "axios";
 import React, { useRef, useEffect, useState } from "react";
@@ -28,6 +28,18 @@ const useStyles = makeStyles(theme => ({
   },
   snackbar: {
     fontSize: "2rem"
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: "relative"
+  },
+  buttonProgress: {
+    position: "absolute",
+    top: "50%",
+    left: "5%",
+    marginTop: -12,
+    marginLeft: -12,
+    zIndex: 10
   }
 }));
 
@@ -54,18 +66,23 @@ const ContactForm = () => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
 
-  const { state, handleBlur, handleChange, handleSubmit, errors } = useForm(
-    submit,
-    validate
-  );
+  const { state, handleBlur, handleChange, handleSubmit, errors, loading } =
+    useForm(submit);
 
   async function submit() {
     const token = await recaptchaRef.current.executeAsync();
     recaptchaRef.current.reset();
 
-    const endpoint = process.env.REACT_APP_AWS_API_GATEWAT_URL;
+    const endpoint = process.env.REACT_APP_AWS_API_GATEWAY_URL;
     const { name, email, message } = state;
-    if (formReady) {
+    if (!formReady) {
+      setSnackbar({
+        ...snackbar,
+        success: false,
+        message: "Please fix all form errors and re-submit again",
+        open: true
+      });
+    } else {
       try {
         const response = await axios({
           method: "POST",
@@ -124,7 +141,7 @@ const ContactForm = () => {
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         fontSize="large"
         open={snackbar.open}
-        autoHideDuration={8000}
+        autoHideDuration={4000}
         onClose={handleClose}
         message={snackbar.message}
         action={
@@ -174,17 +191,22 @@ const ContactForm = () => {
             error={errors.message ? true : false}
             helperText={errors.message ? errors.message : ""}
           />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            endIcon={<Send />}
-            fullWidth={isMobile}
-            disabled={!formReady}
-          >
-            Send
-          </Button>
+          <div className={classes.wrapper}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              endIcon={<Send />}
+              fullWidth={isMobile}
+              disabled={loading}
+            >
+              {loading ? "Sending..." : "Send"}
+            </Button>
+            {loading && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
+          </div>
         </form>
       </Box>
       <ReCAPTCHA

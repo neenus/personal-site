@@ -1,5 +1,6 @@
 import { useState } from "react";
-const useForm = (callback, validate) => {
+import { validateOne, validateAll } from "./utils/validate";
+const useForm = callback => {
   const [state, setState] = useState({
     name: "",
     email: "",
@@ -10,6 +11,8 @@ const useForm = (callback, validate) => {
     email: "",
     message: ""
   });
+
+  const [loading, setLoading] = useState(false);
 
   const resetInitialState = () => {
     setState({
@@ -25,22 +28,37 @@ const useForm = (callback, validate) => {
   };
 
   const handleBlur = payload => {
-    return setErrors(validate(payload));
+    return setErrors(validateOne(payload));
   };
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setErrors(validate(e.target));
+    setErrors(validateOne(e.target));
     setState(state => ({
       ...state,
       [name]: value
     }));
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    callback();
-    resetInitialState();
+    setLoading(true);
+    if (!validateAll(state, errors)) {
+      Object.entries(state).map(async ([name, value]) => {
+        setErrors(
+          validateOne({
+            name,
+            value
+          })
+        );
+      });
+      await callback();
+      setLoading(false);
+    } else {
+      await callback();
+      setLoading(false);
+      resetInitialState();
+    }
   };
 
   return {
@@ -48,7 +66,8 @@ const useForm = (callback, validate) => {
     handleBlur,
     handleChange,
     handleSubmit,
-    errors
+    errors,
+    loading
   };
 };
 
