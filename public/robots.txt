@@ -1,3 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow:
+# if you're sniffing around this file and you can read this message then I'm assuming you're a human please contact me as soon as possible the future of the human race relies on us!
