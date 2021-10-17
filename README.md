@@ -1,6 +1,6 @@
 # Personal Website
 
-See: [neenus.com](https://neenus.com)
+See: [neenus.com](https://portfolio.neenus.com)
 
 My Personal site. an MIT Licensed, very simple, easily modifiable and permission is herby granted, free of charge, to any person to obtain a copy of it to modify and use without limitation.
 
