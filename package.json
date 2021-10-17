@@ -1,7 +1,13 @@
 {
   "name": "portfolio-react",
+  "description": "Personal website of Neenus Gabriel",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neenus/personal-site"
+  },
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
