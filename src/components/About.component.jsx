@@ -1,5 +1,13 @@
-import { makeStyles, Avatar, Box, Typography, Button } from "@material-ui/core";
+import {
+  makeStyles,
+  Avatar,
+  Box,
+  Typography,
+  Button,
+  ButtonGroup
+} from "@material-ui/core";
 import { forwardRef } from "react";
+import { openPopupWidget } from "react-calendly";
 import Title from "./Title.component";
 
 const useStyles = makeStyles(theme => ({
@@ -24,6 +32,7 @@ const useStyles = makeStyles(theme => ({
   },
   btn: {
     marginTop: theme.spacing(3),
+    minWidth: "10rem",
     "&:hover": {
       backgroundColor: "#000",
       color: "#fff"
@@ -39,6 +48,36 @@ const useStyles = makeStyles(theme => ({
     right: 15
   }
 }));
+
+const calendlyOptions = {
+  url: "https://calendly.com/neenusg/30min",
+  pageSettings: {
+    backgroundColor: "ffffff",
+    hideEventTypeDetails: false,
+    hideLandingPageDetails: false,
+    primaryColor: "00a2ff",
+    textColor: "4d5055"
+  },
+  utm: {
+    utmCampaign: "Portfolio",
+    utmContent: "Portfolio Contact",
+    utmMedium: "Personal Portfolio Site",
+    utmSource: "portfolio.neenus.com"
+  }
+};
+
+const { url, pageSettings, utm } = calendlyOptions;
+
+const CalendlyBtn = ({ url, pageSettings, utm }) => {
+  const classes = useStyles();
+  const onClick = () => openPopupWidget({ url, pageSettings, utm });
+
+  return (
+    <Button onClick={onClick} variant="outlined" className={classes.btn}>
+      Schedule a Meeting
+    </Button>
+  );
+};
 
 const About = forwardRef((props, ref) => {
   const classes = useStyles();
@@ -71,8 +110,8 @@ const About = forwardRef((props, ref) => {
           Outside of work I try to enjoy my time with my beautiful family as
           much as I can because life is too short not to... if you want to know
           more about me buy me a beer and I'll tell you everything... just
-          kidding you can get in touch here by filling the form below but a beer
-          would still be nice. 😜
+          kidding you can get in touch by booking a time on my calendar or by
+          filling out the contact form below but a beer would still be nice. 😜
         </Typography>
         <Avatar
           variant="circular"
@@ -85,13 +124,16 @@ const About = forwardRef((props, ref) => {
             )
           }
         />
-        <Button
-          onClick={handleClick}
-          variant="outlined"
-          className={classes.btn}
-        >
-          Contact Me!
-        </Button>
+        <ButtonGroup>
+          <Button
+            onClick={handleClick}
+            variant="outlined"
+            className={classes.btn}
+          >
+            Contact Me!
+          </Button>
+          <CalendlyBtn url={url} pageSettings={pageSettings} utm={utm} />
+        </ButtonGroup>
       </Box>
     </div>
   );
