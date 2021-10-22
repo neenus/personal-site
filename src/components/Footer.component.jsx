@@ -32,13 +32,19 @@ const Footer = () => {
       </Typography>
       <Box className={classes.socialLinks}>
         <Link
+          rel="noreferrer"
           color="inherit"
           target="_blank"
           href="https://www.linkedin.com/in/neenuswg/"
         >
           <LinkedInIcon />
         </Link>
-        <Link color="inherit" target="_blank" href="https://github.com/neenus">
+        <Link
+          rel="noreferrer"
+          color="inherit"
+          target="_blank"
+          href="https://github.com/neenus"
+        >
           <GitHubIcon />
         </Link>
       </Box>
