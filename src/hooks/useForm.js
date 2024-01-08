@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { validateOne, validateAll } from "./utils/validate";
+import { validateOne, validateAll } from "../utils/validate";
 const useForm = callback => {
   const [state, setState] = useState({
     name: "",
