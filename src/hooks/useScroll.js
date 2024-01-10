@@ -10,7 +10,6 @@ const useScroll = () => {
   };
 
   useEffect(() => {
-    console.log({ scrollPosition });
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
