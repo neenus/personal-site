@@ -1,52 +1,18 @@
-import { createRef, useState, useEffect } from "react";
+import { createRef } from "react";
 import { useSpring, animated } from "react-spring";
-
+import useScroll from "../../hooks/useScroll";
+import useStyles from "../../hooks/useStyles";
 import DoubleArrowOutlinedIcon from "@material-ui/icons/DoubleArrowOutlined";
 import About from "../../components/About.component";
 import Title from "../../components/Title.component";
 import Footer from "../../components/Footer.component";
 import Contact from "../../components/ContactSection";
-const { CardMedia, makeStyles, Box, Fab } = require("@material-ui/core");
-
-const useStyles = makeStyles(theme => ({
-  media: {
-    height: "100vh",
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat"
-  },
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    height: "100vh"
-  },
-  btn: {
-    position: "absolute",
-    bottom: "15%",
-    left: "50%",
-    transform: "translate(-50%, 50%)"
-  },
-  down: {
-    "&>:nth-child(1)": {
-      transition: "transform 0.75s ease-in-out",
-      transform: "rotate(90deg)"
-    }
-  },
-  up: {
-    "&>:nth-child(1)": {
-      transition: "transform 0.75s ease-in-out",
-      transform: "rotate(-90deg)"
-    }
-  }
-}));
+const { CardMedia, Box, Fab } = require("@material-ui/core");
 
 const HomePage = () => {
   const classes = useStyles();
   const aboutRef = createRef();
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-  };
+  const scrollPosition = useScroll();
 
   const handlePagePosition = () => {
     if (scrollPosition < 150) {
@@ -58,13 +24,6 @@ const HomePage = () => {
       });
     }
   };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const props = useSpring({
     to: { opacity: 1 },
@@ -99,9 +58,7 @@ const HomePage = () => {
           <Fab
             aria-label="down"
             variant="circular"
-            className={`${classes.btn} ${
-              scrollPosition > 150 ? classes.up : classes.down
-            }`}
+            className={`${classes.btn} ${scrollPosition > 150 ? classes.up : classes.down}`}
             onClick={handlePagePosition}
           >
             <DoubleArrowOutlinedIcon />
