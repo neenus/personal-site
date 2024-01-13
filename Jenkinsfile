@@ -10,14 +10,14 @@ pipeline {
             steps {
                 sh 'echo "Cloning repository..."'
                 sshagent(credentials: ['jenkins-ssh']) {
-                    sh 'git clone git@github.com:neenus/personal-site.git .'
+                    sh 'git clone git@github.com:neenus/personal-site.git'
                 }
             }
         }
         stage('Provision ENV file') {
             steps {
                 sh 'echo "Provisioning .env.local file..."'
-                configFileProvider([configFile(fileId: ${ FILE_ID }, targetLocation: '.env.local')]) {
+                configFileProvider([configFile(fileId: "${FILE_ID}", targetLocation: '.env.local')]) {
                     sh 'echo .env.local file provisioned'
                 }
             }
