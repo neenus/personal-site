@@ -17,7 +17,7 @@ pipeline {
         stage('Provision ENV file') {
             steps {
                 sh 'echo "Provisioning .env.local file..."'
-                configFileProvider([configFile(fileId: ${ FILE_ID }, targetLocation: '.env.local')]) {
+                configFileProvider([configFile(fileId: "${FILE_ID}", targetLocation: '.env.local')]) {
                     sh 'echo .env.local file provisioned'
                 }
             }
