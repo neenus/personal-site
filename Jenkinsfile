@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh 'echo "Cloning repository..."'
                 sshagent(credentials: ['jenkins-ssh']) {
-                    sh 'git clone git@github.com:neenus/personal-site.git .'
+                    sh 'git clone git@github.com:neenus/personal-site.git'
                 }
             }
         }
