@@ -1,16 +1,30 @@
 pipeline {
     agent any
+    options {
+        skipDefaultCheckout(true)   // <-- prevents Jenkins doing an implicit checkout before stages
+    }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-token')
         IMAGE_VERSION = '1.0'
         FILE_ID = '976313a2-37c6-4de8-991c-51f8edd0fe62'
     }
+
     stages {
+        stage('Workspace Debug') {
+            steps {
+                sh 'pwd'
+                sh 'whoami'
+                sh 'ls -la'
+                sh 'mkdir -p .git_test && echo ok > .git_test/writecheck && ls -la .git_test'
+            }
+        }
         stage('Checkout') {
             steps {
                 deleteDir()
                 sshagent(credentials: ['jenkins-ssh']) {
-                    git branch: 'main', url: 'git@github.com:neenus/personal-site.git'
+                    sh 'git --version'
+                    sh 'git clone git@github.com:neenus/personal-site.git .'
+                    sh 'git status'
                 }
             }
         }
