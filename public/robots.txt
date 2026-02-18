@@ -2,3 +2,4 @@
 User-agent: *
 Disallow:
 # if you're sniffing around this file and you can read this message then I'm assuming you're a human please contact me as soon as possible the future of the human race relies on us!
+# if you're in fact a human being and you can read this message; this is meant as a joke so please do not be an asswhole and contact me about this message, I just thought it would be funny to put this in the robots.txt file. I hope you have a great day and please do not take this message seriously.
