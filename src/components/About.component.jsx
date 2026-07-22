@@ -1,16 +1,16 @@
 import {
-  makeStyles,
   Avatar,
   Box,
   Typography,
   Button,
-  ButtonGroup
-} from "@material-ui/core";
+  ButtonGroup,
+  useTheme
+} from "@mui/material";
 import { forwardRef } from "react";
 import { openPopupWidget } from "react-calendly";
 import Title from "./Title.component";
 
-const useStyles = makeStyles(theme => ({
+const getStyles = theme => ({
   root: {
     backgroundColor: "#fff",
     minHeight: "70vh",
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     top: 15,
     right: 15
   }
-}));
+});
 
 const calendlyOptions = {
   url: "https://calendly.com/neenusg/30min",
@@ -69,18 +69,20 @@ const calendlyOptions = {
 const { url, pageSettings, utm } = calendlyOptions;
 
 const CalendlyBtn = ({ url, pageSettings, utm }) => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const onClick = () => openPopupWidget({ url, pageSettings, utm });
 
   return (
-    <Button onClick={onClick} variant="outlined" className={classes.btn}>
+    <Button onClick={onClick} variant="outlined" sx={styles.btn}>
       Schedule a Meeting
     </Button>
   );
 };
 
 const About = forwardRef((props, ref) => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const handleClick = () => {
     // scroll all the way to the bottom of the page
@@ -92,9 +94,9 @@ const About = forwardRef((props, ref) => {
   };
 
   return (
-    <div id="about" className={classes.root} ref={ref}>
+    <div id="about" style={styles.root} ref={ref}>
       <Box
-        className={classes.container}
+        sx={styles.container}
         display="flex"
         flexDirection="column"
         justifyContent="center"
@@ -115,7 +117,7 @@ const About = forwardRef((props, ref) => {
         </Typography>
         <Avatar
           variant="circular"
-          className={classes.large}
+          sx={styles.large}
           src={"/20170514_001355.jpg"}
           alt="A horrible headshot of myself"
           onClick={() =>
@@ -128,7 +130,7 @@ const About = forwardRef((props, ref) => {
           <Button
             onClick={handleClick}
             variant="outlined"
-            className={classes.btn}
+            sx={styles.btn}
           >
             Contact Me!
           </Button>
