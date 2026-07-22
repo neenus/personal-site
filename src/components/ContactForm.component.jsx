@@ -1,23 +1,21 @@
 import {
   Box,
-  makeStyles,
   Button,
   useTheme,
   useMediaQuery,
   Snackbar,
   IconButton,
-  CircularProgress
-} from "@material-ui/core";
+  CircularProgress,
+  Alert as MuiAlert
+} from "@mui/material";
 import useForm from "../hooks/useForm";
-import { Send } from "@material-ui/icons";
+import { Send, Close as CloseIcon } from "@mui/icons-material";
 import axios from "axios";
 import React, { useRef, useEffect, useState } from "react";
 import FormInput from "./FormInput.component";
 import ReCAPTCHA from "react-google-recaptcha";
-import CloseIcon from "@material-ui/icons/Close";
-import MuiAlert from "@material-ui/lab/Alert";
 
-const useStyles = makeStyles(theme => ({
+const getStyles = theme => ({
   root: {
     backgroundColor: "white"
   },
@@ -41,12 +39,12 @@ const useStyles = makeStyles(theme => ({
     marginLeft: -12,
     zIndex: 10
   }
-}));
+});
 
 const ContactForm = () => {
   const recaptchaRef = useRef();
-  const classes = useStyles();
   const theme = useTheme();
+  const styles = getStyles(theme);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [formReady, setFormReady] = useState(false);
   const [snackbar, setSnackbar] = useState({
@@ -136,7 +134,7 @@ const ContactForm = () => {
   }, [errors, state]);
 
   return (
-    <div id="contact-form" className={classes.root}>
+    <div id="contact-form" style={styles.root}>
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         fontSize="large"
@@ -159,7 +157,7 @@ const ContactForm = () => {
           {snackbar.message}
         </Alert>
       </Snackbar>
-      <Box className={classes.container}>
+      <Box sx={styles.container}>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <FormInput
             label="Full Name"
@@ -191,12 +189,11 @@ const ContactForm = () => {
             error={errors.message ? true : false}
             helperText={errors.message ? errors.message : ""}
           />
-          <div className={classes.wrapper}>
+          <div style={styles.wrapper}>
             <Button
               type="submit"
               variant="contained"
               color="primary"
-              className={classes.submit}
               endIcon={<Send />}
               fullWidth={isMobile}
               disabled={loading}
@@ -204,7 +201,7 @@ const ContactForm = () => {
               {loading ? "Sending..." : "Send"}
             </Button>
             {loading && (
-              <CircularProgress size={24} className={classes.buttonProgress} />
+              <CircularProgress size={24} sx={styles.buttonProgress} />
             )}
           </div>
         </form>

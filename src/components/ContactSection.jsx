@@ -4,27 +4,29 @@ import {
   CardContent,
   Typography,
   Link,
-  makeStyles
-} from "@material-ui/core";
+  useTheme
+} from "@mui/material";
 import Title from "./Title.component";
 import ContactForm from "./ContactForm.component";
 
-const useStyles = makeStyles(theme => ({
+const getStyles = theme => ({
   grid: {
     [theme.breakpoints.up("md")]: {
       padding: "2em"
     }
   }
-}));
+});
+
 const Contact = () => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <div>
       <Grid
         container
         justifyContent="center"
         alignItems="stretch"
-        className={classes.grid}
+        sx={styles.grid}
       >
         <Grid item xs={12} md={3}>
           <Card

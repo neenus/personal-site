@@ -1,6 +1,4 @@
-import { makeStyles } from "@material-ui/core";
-
-const useStyles = makeStyles(theme => ({
+const getStyles = theme => ({
   media: {
     height: "100vh",
     backgroundPosition: "center",
@@ -29,6 +27,6 @@ const useStyles = makeStyles(theme => ({
       transform: "rotate(-90deg)"
     }
   }
-}));
+});
 
-export default useStyles;
+export default getStyles;
