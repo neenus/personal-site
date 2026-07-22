@@ -1,7 +1,8 @@
-import { makeStyles, Typography, Box, Link } from "@material-ui/core";
-import GitHubIcon from "@material-ui/icons/GitHub";
-import LinkedInIcon from "@material-ui/icons/LinkedIn";
-const useStyles = makeStyles(theme => ({
+import { Typography, Box, Link, useTheme } from "@mui/material";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
+const getStyles = theme => ({
   footer: {
     padding: theme.spacing(1),
     color: "white"
@@ -14,13 +15,15 @@ const useStyles = makeStyles(theme => ({
       margin: theme.spacing(0, 0.5)
     }
   }
-}));
+});
+
 const Footer = () => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <Box
       id="footer"
-      className={classes.footer}
+      sx={styles.footer}
       display="flex"
       justifyContent="space-around"
       alignItems="center"
@@ -30,7 +33,7 @@ const Footer = () => {
         {" - "}
         {new Date().getFullYear()}
       </Typography>
-      <Box className={classes.socialLinks}>
+      <Box sx={styles.socialLinks}>
         <Link
           rel="noreferrer"
           color="inherit"

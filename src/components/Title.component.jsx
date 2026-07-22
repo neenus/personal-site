@@ -1,7 +1,6 @@
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core";
+import { Typography, useTheme } from "@mui/material";
 
-const useStyles = makeStyles(theme => ({
+const getStyles = theme => ({
   title: {
     textTransform: "uppercase",
     fontWeight: 700,
@@ -24,16 +23,17 @@ const useStyles = makeStyles(theme => ({
       bottom: -10
     }
   }
-}));
+});
 
 const Title = ({ variant, message, className }) => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <Typography
       variant={variant}
       gutterBottom
       align="center"
-      className={classes[className]}
+      sx={styles[className]}
     >
       {message}
     </Typography>
