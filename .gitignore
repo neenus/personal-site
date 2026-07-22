@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# local design/spec docs
+/docs
+
+# Claude Code local state
+/.claude/settings.local.json
+/.claude/worktrees/

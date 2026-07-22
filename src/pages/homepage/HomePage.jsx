@@ -1,16 +1,17 @@
 import { createRef } from "react";
 import { useSpring, animated } from "react-spring";
 import useScroll from "../../hooks/useScroll";
-import useStyles from "../../hooks/useStyles";
-import DoubleArrowOutlinedIcon from "@material-ui/icons/DoubleArrowOutlined";
+import getStyles from "../../hooks/useStyles";
+import DoubleArrowOutlinedIcon from "@mui/icons-material/DoubleArrowOutlined";
 import About from "../../components/About.component";
 import Title from "../../components/Title.component";
 import Footer from "../../components/Footer.component";
 import Contact from "../../components/ContactSection";
-const { CardMedia, Box, Fab } = require("@material-ui/core");
+import { CardMedia, Box, Fab, useTheme } from "@mui/material";
 
 const HomePage = () => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const aboutRef = createRef();
   const scrollPosition = useScroll();
 
@@ -36,10 +37,10 @@ const HomePage = () => {
   return (
     <animated.main style={props}>
       <CardMedia
-        className={classes.media}
+        sx={styles.media}
         image="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80"
       >
-        <div className={classes.overlay}>
+        <div style={styles.overlay}>
           <Box
             minHeight="70vh"
             display="flex"
@@ -58,7 +59,10 @@ const HomePage = () => {
           <Fab
             aria-label="down"
             variant="circular"
-            className={`${classes.btn} ${scrollPosition > 150 ? classes.up : classes.down}`}
+            sx={{
+              ...styles.btn,
+              ...(scrollPosition > 150 ? styles.up : styles.down)
+            }}
             onClick={handlePagePosition}
           >
             <DoubleArrowOutlinedIcon />
