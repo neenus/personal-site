@@ -6,8 +6,8 @@ import {
   ButtonGroup,
   useTheme
 } from "@mui/material";
-import { forwardRef } from "react";
-import { openPopupWidget } from "react-calendly";
+import { forwardRef, useState } from "react";
+import { PopupModal } from "react-calendly";
 import Title from "./Title.component";
 
 const getStyles = theme => ({
@@ -71,12 +71,26 @@ const { url, pageSettings, utm } = calendlyOptions;
 const CalendlyBtn = ({ url, pageSettings, utm }) => {
   const theme = useTheme();
   const styles = getStyles(theme);
-  const onClick = () => openPopupWidget({ url, pageSettings, utm });
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Button onClick={onClick} variant="outlined" sx={styles.btn}>
-      Schedule a Meeting
-    </Button>
+    <>
+      <Button
+        onClick={() => setIsOpen(true)}
+        variant="outlined"
+        sx={styles.btn}
+      >
+        Schedule a Meeting
+      </Button>
+      <PopupModal
+        url={url}
+        pageSettings={pageSettings}
+        utm={utm}
+        onModalClose={() => setIsOpen(false)}
+        open={isOpen}
+        rootElement={document.getElementById("root")}
+      />
+    </>
   );
 };
 
