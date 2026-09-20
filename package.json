@@ -17,14 +17,14 @@
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.7",
     "axios": "^1.20.0",
-    "react": "^19.2.8",
+    "react": "^19.3.0",
     "react-calendly": "^4.4.0",
-    "react-dom": "^19.2.8",
+    "react-dom": "^19.3.0",
     "react-google-recaptcha": "^3.1.0",
-    "react-router-dom": "^7.18.3",
+    "react-router-dom": "^7.18.4",
     "react-scripts": "^5.0.1",
     "react-spring": "^10.0.4",
-    "web-vitals": "^6.2.1"
+    "web-vitals": "^6.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
